@@ -1,0 +1,9 @@
+popeye:
+  excludes:
+    linters:
+      pods:
+        instances:
+          - codes: [ 1204, 206, 300, 302, 306 ]
+      services:
+        instances:
+          - codes: [1109]

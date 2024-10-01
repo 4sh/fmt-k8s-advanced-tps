@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: failing
+  namespace: advanced-tp2
+spec:
+  selector:
+    matchLabels:
+      app: failing
+  template:
+    metadata:
+      labels:
+        app: failing
+    spec:
+      containers:
+        - name: failing
+          image: europe-west9-docker.pkg.dev/qsh-learning/k8s-advanced/failing:1.0
+          ports:
+            - containerPort: 8080
