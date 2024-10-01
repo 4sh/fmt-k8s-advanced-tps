@@ -15,9 +15,23 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: nginx:latest
+          image: nginx:1.27.2
           ports:
             - containerPort: 80
+              name: http
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "100Mi"
+              cpu: "100m"
+          livenessProbe:
+            httpGet:
+              port: http
+          readinessProbe:
+            httpGet:
+              port: http
 ---
 apiVersion: v1
 kind: Service
@@ -27,6 +41,6 @@ metadata:
 spec:
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: http
   selector:
     app: nginx
