@@ -19,6 +19,19 @@ spec:
           volumeMounts:
             - name: shared-data
               mountPath: /usr/share/nginx/html
+        - name: content-generator
+          image: busybox
+          command:
+            - /bin/sh
+            - -c
+            - |
+              while true; do
+                echo "Date et heure: $(date)" > /usr/share/nginx/html/index.html;
+                sleep 1;
+              done
+          volumeMounts:
+            - name: shared-data
+              mountPath: /usr/share/nginx/html
       volumes:
         - name: shared-data
           emptyDir: {}

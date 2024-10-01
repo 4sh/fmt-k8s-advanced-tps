@@ -14,13 +14,23 @@ spec:
       labels:
         test: init-container
     spec:
-        containers:
-            - name: main-container
-              image: busybox
-              command: ['sh', '-c', 'cat /config/server.conf && sleep 600']
-              volumeMounts:
-                - name: config-volume
-                  mountPath: /config
-        volumes:
-          - name: config-volume
-            emptyDir: {}
+      initContainers:
+        - name: init-config
+          image: busybox
+          command: [ 'sh', '-c', 'echo "server configured" > /config/server.conf' ]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+        - name: wait-for-mongo
+          image: mongo
+          command: [ 'sh', '-c', "until mongosh mongo:27017 --quiet --eval 'db.version()'; do echo waiting for mongo on mongo:27017; sleep 2; done" ]
+      containers:
+        - name: main-container
+          image: busybox
+          command: ['sh', '-c', 'cat /config/server.conf && sleep 60']
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+      volumes:
+        - name: config-volume
+          emptyDir: {}
