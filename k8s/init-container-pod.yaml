@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    test: init-container
+  name: init-container-exec
+  namespace: advanced-tp3
+spec:
+  selector:
+    matchLabels:
+      test: init-container
+  template:
+    metadata:
+      labels:
+        test: init-container
+    spec:
+        containers:
+            - name: main-container
+              image: busybox
+              command: ['sh', '-c', 'cat /config/server.conf && sleep 600']
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /config
+        volumes:
+          - name: config-volume
+            emptyDir: {}
