@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: success-cronjob
+  namespace: advanced-tp4
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: main
+              image: busybox
+              args:
+                - /bin/sh
+                - -c
+                - sleep 120; echo "cronjob ok"; exit 0
+          restartPolicy: Never
+      backoffLimit: 1
+  successfulJobsHistoryLimit: 1

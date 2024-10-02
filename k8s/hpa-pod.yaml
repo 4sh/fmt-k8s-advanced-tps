@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    test: hpa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      test: hpa
+  template:
+    metadata:
+      labels:
+        test: hpa
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          resources:
+            requests:
+              cpu: 50m
+            limits:
+              cpu: 100m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-hpa
+spec:
+  selector:
+      test: hpa
+  ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 80
+  type: ClusterIP
