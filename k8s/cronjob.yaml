@@ -19,3 +19,4 @@ spec:
           restartPolicy: Never
       backoffLimit: 1
   successfulJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid

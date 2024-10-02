@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: busybox-daemonset
+  namespace: advanced-tp4
+  labels:
+    app: busybox-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: busybox-daemonset
+  template:
+    metadata:
+      labels:
+        app: busybox-daemonset
+    spec:
+      containers:
+        - name: busybox-daemonset
+          image: busybox
+          env:
+            - name: MY_NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          args:
+            - /bin/sh
+            - -c
+            - "while true; do echo \"Je suis sur le noeud $(MY_NODE_NAME)\"; sleep 600; done"
