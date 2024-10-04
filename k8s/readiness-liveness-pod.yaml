@@ -18,6 +18,10 @@ spec:
       containers:
         - image: registry.k8s.io/e2e-test-images/agnhost:2.40
           name: readiness
+          ports:
+            - containerPort: 8080
+          args:
+            - liveness
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,6 +43,8 @@ spec:
       containers:
         - image: registry.k8s.io/e2e-test-images/agnhost:2.40
           name: liveness
+          ports:
+            - containerPort: 8080
           args:
             - liveness
 ---
