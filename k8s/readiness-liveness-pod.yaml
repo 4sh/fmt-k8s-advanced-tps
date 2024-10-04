@@ -2,24 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    test: liveness-readiness
+    test: readiness-liveness
   name: readiness-exec
   namespace: advanced-tp3
 spec:
   replicas: 1
   selector:
     matchLabels:
-      test: liveness-readiness
+      test: readiness-liveness
   template:
     metadata:
       labels:
-        test: liveness-readiness
+        test: readiness-liveness
     spec:
       containers:
         - image: registry.k8s.io/e2e-test-images/agnhost:2.40
           name: readiness
-          args:
-            - liveness
           readinessProbe:
             httpGet:
               path: /healthz
@@ -31,18 +29,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    test: liveness-readiness
+    test: readiness-liveness
   name: liveness-exec
   namespace: advanced-tp3
 spec:
   replicas: 1
   selector:
     matchLabels:
-      test: liveness-readiness
+      test: readiness-liveness
   template:
     metadata:
       labels:
-        test: liveness-readiness
+        test: readiness-liveness
     spec:
       containers:
         - image: registry.k8s.io/e2e-test-images/agnhost:2.40
@@ -59,9 +57,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: service-liveness-readiness
+  name: service-readiness-liveness
 spec:
   ports:
     - port: 80
+      targetPort: 8080
   selector:
-    test: liveness-readiness
+    test: readiness-liveness
