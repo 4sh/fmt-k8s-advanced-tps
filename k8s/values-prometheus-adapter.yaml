@@ -132,13 +132,31 @@ rules:
   default: false
 
   custom:
-    - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
+    - seriesQuery: 'http_requests_total'
       resources:
-        template: <<.Resource>>
+        overrides:
+          namespace: { resource: "namespace" }
+          pod: { resource: "pod" }
       name:
         matches: "^(.*)_total"
-        as: ""
-      metricsQuery: sum(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>)
+        as: "${1}_per_second"
+      metricsQuery: 'rate(http_requests_total[5m])'
+#    - seriesQuery: '{namespace!="",__name__!~"^container_.*"}'
+#      resources:
+#        template: <<.Resource>>
+#      name:
+#        matches: "^(.*)_total"
+#        as: ""
+#      metricsQuery: (sum(rate(<<.Series>>{<<.LabelMatchers>>}) by (<<.GroupBy>>))
+#    - seriesQuery: '{namespace!="", pod!=""}'
+#      resources:
+#        overrides:
+#          namespace: {resource: "namespace"}
+#          pod: {resource: "pod"}
+#      name:
+#        matches: "http_requests_per_second"
+#        as: "http_requests_per_second"
+#      metricsQuery: 'rate(http_requests_total{<<.LabelMatchers>>}[2m])'
     # - seriesQuery: '{__name__=~"^some_metric_count$"}'
     #   resources:
     #     template: <<.Resource>>

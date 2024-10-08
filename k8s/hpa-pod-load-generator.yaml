@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: load-generator-pod
+  namespace: advanced-tp4
+  labels:
+    test: hpa-load-generator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      test: hpa-load-generator
+  template:
+    metadata:
+      labels:
+        test: hpa-load-generator
+    spec:
+      containers:
+        - name: load-generator
+          image: ricoli/hey:latest
+          command:
+            - "/bin/sh"
+            - "-c"
+            - "hey -n 50000 -c 1000 http://custom-metrics-hpa"
