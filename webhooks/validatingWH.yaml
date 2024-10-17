@@ -20,10 +20,10 @@ webhooks:
       port: 443
   namespaceSelector:
     matchExpressions:
-      - key: customer
+      - key: <KEY_TO_CHANGE>
         operator: In
         values:
-          - formation
+          - <VALUE_TO_CHANGE>
   admissionReviewVersions: ["v1"]
   sideEffects: None
   timeoutSeconds: 5
