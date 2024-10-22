@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-pod-affinity
+  name: nginx-pod-anti-affinity
   namespace: advanced-tp5
   labels:
-    test: affinity
+    test: anti-affinity
 spec:
   replicas: 3
   selector:
     matchLabels:
-      test: affinity
+      test: anti-affinity
   template:
     metadata:
       labels:
-        test: affinity
+        test: anti-affinity
     spec:
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: app
+                  - key: topology.kubernetes.io/region
                     operator: In
                     values:
-                      - nginx
+                      - europe-west1
               topologyKey: "kubernetes.io/hostname"
       tolerations:
         - effect: NoSchedule
@@ -44,10 +44,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-affinity
+  name: nginx-anti-affinity
 spec:
   selector:
-    test: affinity
+    test: anti-affinity
   ports:
     - protocol: TCP
       port: 80
