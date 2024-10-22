@@ -6,7 +6,7 @@ metadata:
   labels:
     test: disruptionbudget
 spec:
-  replicas: 3
+  replicas: 6
   selector:
     matchLabels:
       test: disruptionbudget
@@ -30,16 +30,3 @@ spec:
             limits:
               cpu: 100m
               memory: 128Mi
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-disruptionbudget
-spec:
-  selector:
-    test: disruptionbudget
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: ClusterIP
