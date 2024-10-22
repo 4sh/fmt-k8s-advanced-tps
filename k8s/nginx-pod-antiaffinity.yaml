@@ -16,14 +16,15 @@ spec:
         test: affinity
     spec:
       affinity:
-        nodeAffinity:
+        podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-                - matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                        - nginx
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - nginx
+              topologyKey: "kubernetes.io/hostname"
       tolerations:
         - effect: NoSchedule
           operator: Equal
