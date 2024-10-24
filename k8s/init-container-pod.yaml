@@ -14,13 +14,13 @@ spec:
       labels:
         test: init-container
     spec:
-        containers:
-            - name: main-container
-              image: busybox
-              command: ['sh', '-c', 'cat /config/server.conf && sleep 600']
-              volumeMounts:
-                - name: config-volume
-                  mountPath: /config
-        volumes:
-          - name: config-volume
-            emptyDir: {}
+      containers:
+        - name: main-container
+          image: busybox
+          command: ['sh', '-c', 'cat /config/server.conf && sleep 600']
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+      volumes:
+        - name: config-volume
+          emptyDir: {}
