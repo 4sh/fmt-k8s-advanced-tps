@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: startup
-          image: registry.k8s.io/busybox
+          image: registry.k8s.io/busybox:1.37
           args:
             - /bin/sh
             - -c

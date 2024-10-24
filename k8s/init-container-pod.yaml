@@ -16,7 +16,7 @@ spec:
     spec:
       initContainers:
         - name: init-config
-          image: busybox
+          image: registry.k8s.io/busybox:1.37
           command: [ 'sh', '-c', 'echo "server configured" > /config/server.conf' ]
           volumeMounts:
             - name: config-volume
