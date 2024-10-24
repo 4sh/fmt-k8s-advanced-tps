@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: main-container
-          image: busybox
+          image: registry.k8s.io/busybox:1.37
           command: ['sh', '-c', 'cat /config/server.conf && sleep 600']
           volumeMounts:
             - name: config-volume

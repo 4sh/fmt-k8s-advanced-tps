@@ -16,7 +16,7 @@ spec:
         app: mongo
     spec:
       containers:
-        - image: mongo
+        - image: mongo:7.0.15-rc1
           name: mongo
           args: ["--dbpath","/data/db"]
           livenessProbe:
